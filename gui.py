@@ -169,9 +169,7 @@ class MazeApp:
                     data.append({
                         "Algoritmo": values[0],
                         "Tiempo (s)": float(values[4]) if values[4] != "N/A" else None,
-                        "Largo Camino": int(values[5]) if values[5] != "N/A" else None,
-                        "Nodos Explorados": int(values[6]),
-                        "Branching Factor": float(values[7]) if values[7] != "N/A" else None
+                        "Nodos Explorados": int(values[6])
                     })
                 except ValueError:
                     continue  
@@ -182,12 +180,14 @@ class MazeApp:
             print("No hay datos en la tabla para graficar.")
             return
 
-        fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+        fig, axes = plt.subplots(1, 2, figsize=(12, 5))  
 
-        df.groupby("Algoritmo")["Tiempo (s)"].mean().plot(kind="bar", ax=axes[0, 0], title="Tiempo de Ejecución")
-        df.groupby("Algoritmo")["Nodos Explorados"].mean().plot(kind="bar", ax=axes[1, 0], title="Nodos Explorados")
+        df.groupby("Algoritmo")["Tiempo (s)"].mean().plot(kind="bar", ax=axes[0], title="Tiempo de Ejecución")
+        df.groupby("Algoritmo")["Nodos Explorados"].mean().plot(kind="bar", ax=axes[1], title="Nodos Explorados")
+
         plt.tight_layout()
         plt.show()
+
 
 
 if __name__ == "__main__":

@@ -318,19 +318,21 @@ def generar_resultados(maze, num_simulations=3):
     return df
 
 def graficar_resultados(df):
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5))  
 
-    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
-    df.groupby("Algoritmo")["Tiempo de ejecución (s)"].mean().plot(kind="bar", ax=axes[0, 0], title="Tiempo de Ejecución")
+    if "Tiempo de ejecución (s)" in df.columns:
+        df.groupby("Algoritmo")["Tiempo de ejecución (s)"].mean().plot(
+            kind="bar", ax=axes[0], title="Tiempo de Ejecución"
+        )
 
-    df[df["Largo del camino"] != "N/A"].groupby("Algoritmo")["Largo del camino"].mean().plot(kind="bar", ax=axes[0, 1], title="Largo del Camino")
-
-
-    df.groupby("Algoritmo")["Nodos explorados"].mean().plot(kind="bar", ax=axes[1, 0], title="Nodos Explorados")
-
-    df[df["Branching Factor"] != "N/A"].groupby("Algoritmo")["Branching Factor"].mean().plot(kind="bar", ax=axes[1, 1], title="Branching Factor")
+    if "Nodos explorados" in df.columns:
+        df.groupby("Algoritmo")["Nodos explorados"].mean().plot(
+            kind="bar", ax=axes[1], title="Nodos Explorados"
+        )
 
     plt.tight_layout()
     plt.show()
+
     
 
 
